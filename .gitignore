@@ -1,0 +1,15 @@
+# Binary đã biên dịch
+hotel
+hotel.exe
+/main
+*.o
+*.out
+a.out
+
+# File tạm của editor
+.vscode/
+*.swp
+*~
+
+# File dữ liệu mẫu của từng máy (nếu không muốn commit)
+# *.txt
