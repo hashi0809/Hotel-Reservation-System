@@ -85,50 +85,6 @@ void printRoom(const Room *room) {
            getStatusString(room->status), room->guestName, room->daysStayed);
 }
 
-void addRoom(void) {
-    printf("[TV2] Chuc nang addRoom dang phat trien.\n");
-}
-
-void displayRooms(void) {
-    printf("[TV2] Chuc nang displayRooms dang phat trien.\n");
-}
-
-void updateRoom(void) {
-    printf("[TV2] Chuc nang updateRoom dang phat trien.\n");
-}
-
-void deleteRoom(void) {
-    printf("[TV2] Chuc nang deleteRoom dang phat trien.\n");
-}
-
-void saveToFile(void) {
-    printf("[TV2] Chuc nang saveToFile dang phat trien.\n");
-}
-
-void loadFromFile(void) {
-    printf("[TV2] Chuc nang loadFromFile dang phat trien.\n");
-}
-
-void searchRooms(void) {
-    printf("[TV3] Chuc nang searchRooms dang phat trien.\n");
-}
-
-void bookRoom(void) {
-    printf("[TV3] Chuc nang bookRoom dang phat trien.\n");
-}
-
-void checkoutRoom(void) {
-    printf("[TV3] Chuc nang checkoutRoom dang phat trien.\n");
-}
-
-void showStatistics(void) {
-    printf("[TV3] Chuc nang showStatistics dang phat trien.\n");
-}
-
-void sortByPrice(void) {
-    printf("[TV3] Chuc nang sortByPrice dang phat trien.\n");
-}
-
 int main(void) {
     int choice = -1;
     while (choice != 0) {
