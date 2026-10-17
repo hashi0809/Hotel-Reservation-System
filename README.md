@@ -7,9 +7,9 @@ thêm/sửa/xóa phòng, đặt phòng, trả phòng + in hóa đơn, thống k�
 
 | # | Họ tên | MSSV | Phụ trách |
 |---|--------|------|-----------|
-| 1 | _(trưởng nhóm)_ | | Khung chương trình: struct, hàm nhập liệu, hàm tiện ích, menu chính, README |
-| 2 | | | `addRoom`, `displayRooms`, `updateRoom`, `deleteRoom`, `saveToFile`, `loadFromFile` |
-| 3 | | | `searchRooms`, `bookRoom`, `checkoutRoom`, `showStatistics`, `sortByPrice` |
+| 1 |Hoàng Phúc | | Khung chương trình: struct, hàm nhập liệu, hàm tiện ích, menu chính, README |
+| 2 |Thái Toàn | | `addRoom`, `displayRooms`, `updateRoom`, `deleteRoom`, `saveToFile`, `loadFromFile` |
+| 3 |Vĩnh Trung | | `searchRooms`, `bookRoom`, `checkoutRoom`, `showStatistics`, `sortByPrice` |
 
 > ⚠️ Quy tắc Git: làm việc trên nhánh `feat/<ten-chuc-nang>`, KHÔNG commit
 > trực tiếp lên `main`. Xong việc tạo Pull Request để trưởng nhóm review rồi merge.
