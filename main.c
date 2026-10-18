@@ -9,16 +9,17 @@
 typedef struct {
     int roomId;
     char roomType[20];
-    float pricePerDay;
+    long pricePerDay;
     int maxGuests;
     int status;
     char guestName[51];
-    int daysStayed;
+    char checkInDate[11];
+    char checkOutDate[11];
 } Room;
 
 Room rooms[MAX];
 int roomCount = 0;
-float totalRevenue = 0;
+long totalRevenue = 0;
 
 void readString(const char *prompt, char *buffer, int size) {
     printf("%s", prompt);
@@ -27,22 +28,24 @@ void readString(const char *prompt, char *buffer, int size) {
 }
 
 int readInt(const char *prompt, int *value) {
-    char buffer[256];
-    readString(prompt, buffer, sizeof(buffer));
-    char *end;
-    long v = strtol(buffer, &end, 10);
-    if (*end != '\0' || end == buffer) return 0;
-    *value = (int)v;
+    int c;
+    printf("%s", prompt);
+    if (scanf("%d", value) != 1) {
+        while ((c = getchar()) != '\n' && c != EOF);
+        return 0;
+    }
+    while ((c = getchar()) != '\n' && c != EOF);
     return 1;
 }
 
-int readFloat(const char *prompt, float *value) {
-    char buffer[256];
-    readString(prompt, buffer, sizeof(buffer));
-    char *end;
-    float v = strtof(buffer, &end);
-    if (*end != '\0' || end == buffer) return 0;
-    *value = v;
+int readLong(const char *prompt, long *value) {
+    int c;
+    printf("%s", prompt);
+    if (scanf("%ld", value) != 1) {
+        while ((c = getchar()) != '\n' && c != EOF);
+        return 0;
+    }
+    while ((c = getchar()) != '\n' && c != EOF);
     return 1;
 }
 
@@ -73,16 +76,93 @@ const char* getStatusString(int status) {
     return status == ROOM_BOOKED ? "Da dat" : "Trong";
 }
 
+int isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+int daysInMonth(int month, int year) {
+    int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (month == 2 && isLeapYear(year)) return 29;
+    return days[month - 1];
+}
+
+int isValidDate(const char *date) {
+    int d, m, y;
+    if (strlen(date) != 10 || date[2] != '/' || date[5] != '/') return 0;
+    if (sscanf(date, "%d/%d/%d", &d, &m, &y) != 3) return 0;
+    if (y < 1900 || y > 2100) return 0;
+    if (m < 1 || m > 12) return 0;
+    if (d < 1 || d > daysInMonth(m, y)) return 0;
+    return 1;
+}
+
+long dateToDays(const char *date) {
+    int d, m, y;
+    sscanf(date, "%d/%d/%d", &d, &m, &y);
+    long total = 0;
+    for (int yy = 1900; yy < y; yy++)
+        total += isLeapYear(yy) ? 366 : 365;
+    for (int mm = 1; mm < m; mm++)
+        total += daysInMonth(mm, y);
+    return total + d;
+}
+
 void printHeader(void) {
-    printf("%-8s|%-8s|%-12s|%-11s|%-10s|%-20s|%-8s\n",
+    printf("%-8s|%-8s|%-12s|%-11s|%-10s|%-20s|%-10s|%-10s\n",
            "Ma phong", "Loai", "Gia/ngay", "Khach toi da",
-           "Trang thai", "Ten khach", "So ngay");
+           "Trang thai", "Ten khach", "Ngay vao", "Ngay ra");
 }
 
 void printRoom(const Room *room) {
-    printf("%-8d|%-8s|%-12.0f|%-11d|%-10s|%-20s|%-8d\n",
+    printf("%-8d|%-8s|%-12ld|%-11d|%-10s|%-20s|%-10s|%-10s\n",
            room->roomId, room->roomType, room->pricePerDay, room->maxGuests,
-           getStatusString(room->status), room->guestName, room->daysStayed);
+           getStatusString(room->status), room->guestName,
+           room->checkInDate[0] ? room->checkInDate : "-",
+           room->checkOutDate[0] ? room->checkOutDate : "-");
+}
+
+void addRoom(void) {
+    printf("[TV2] Chuc nang addRoom dang phat trien.\n");
+}
+
+void displayRooms(void) {
+    printf("[TV2] Chuc nang displayRooms dang phat trien.\n");
+}
+
+void updateRoom(void) {
+    printf("[TV2] Chuc nang updateRoom dang phat trien.\n");
+}
+
+void deleteRoom(void) {
+    printf("[TV2] Chuc nang deleteRoom dang phat trien.\n");
+}
+
+void saveToFile(void) {
+    printf("[TV2] Chuc nang saveToFile dang phat trien.\n");
+}
+
+void loadFromFile(void) {
+    printf("[TV2] Chuc nang loadFromFile dang phat trien.\n");
+}
+
+void searchRooms(void) {
+    printf("[TV3] Chuc nang searchRooms dang phat trien.\n");
+}
+
+void bookRoom(void) {
+    printf("[TV3] Chuc nang bookRoom dang phat trien.\n");
+}
+
+void checkoutRoom(void) {
+    printf("[TV3] Chuc nang checkoutRoom dang phat trien.\n");
+}
+
+void showStatistics(void) {
+    printf("[TV3] Chuc nang showStatistics dang phat trien.\n");
+}
+
+void sortByPrice(void) {
+    printf("[TV3] Chuc nang sortByPrice dang phat trien.\n");
 }
 
 int main(void) {
