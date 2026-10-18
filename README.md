@@ -7,9 +7,9 @@ thêm/sửa/xóa phòng, đặt phòng, trả phòng + in hóa đơn, thống k�
 
 | # | Họ tên | MSSV | Phụ trách |
 |---|--------|------|-----------|
-| 1 |Hoàng Phúc | | Khung chương trình: struct, hàm nhập liệu, hàm tiện ích, menu chính, README |
-| 2 |Thái Toàn | | `addRoom`, `displayRooms`, `updateRoom`, `deleteRoom`, `saveToFile`, `loadFromFile` |
-| 3 |Vĩnh Trung | | `searchRooms`, `bookRoom`, `checkoutRoom`, `showStatistics`, `sortByPrice` |
+| 1 | Phúc (trưởng nhóm) | | Khung chương trình: struct, hàm nhập liệu, hàm tiện ích, menu chính, README |
+| 2 | Thái Toàn | | `addRoom`, `displayRooms`, `updateRoom`, `deleteRoom`, `saveToFile`, `loadFromFile` |
+| 3 | Hồ Vĩnh Trung | | `searchRooms`, `bookRoom`, `checkoutRoom`, `showStatistics`, `sortByPrice` |
 
 > ⚠️ Quy tắc Git: làm việc trên nhánh `feat/<ten-chuc-nang>`, KHÔNG commit
 > trực tiếp lên `main`. Xong việc tạo Pull Request để trưởng nhóm review rồi merge.
@@ -20,18 +20,24 @@ thêm/sửa/xóa phòng, đặt phòng, trả phòng + in hóa đơn, thống k�
 
 ```c
 typedef struct {
-    int   roomId;         // 101, 102...
-    char  roomType[20];   // "Don", "Doi", "VIP", "TongThong"
-    float pricePerDay;    // VND/ngày
-    int   maxGuests;      // số khách tối đa
-    int   status;         // ROOM_EMPTY = trống, ROOM_BOOKED = đã đặt
-    char  guestName[51];  // tên khách đang thuê
-    int   daysStayed;     // số ngày thuê
+    int   roomId;            // 101, 102...
+    char  roomType[20];      // "Don", "Doi", "VIP", "TongThong"
+    long  pricePerDay;       // VND/ngày (số nguyên, không dùng float)
+    int   maxGuests;         // số khách tối đa
+    int   status;            // ROOM_EMPTY = trống, ROOM_BOOKED = đã đặt
+    char  guestName[51];     // tên khách đang thuê
+    char  checkInDate[11];   // ngày vào, dạng "DD/MM/YYYY"
+    char  checkOutDate[11];  // ngày ra, dạng "DD/MM/YYYY" (trống khi chưa trả)
 } Room;
 ```
 
 Lưu trữ bằng mảng 1 chiều tĩnh `Room rooms[100]`, đúng yêu cầu đề bài
-(int ✓, float ✓, chuỗi ✓, trên 4 thuộc tính ✓).
+(int ✓, long ✓, chuỗi ✓, trên 4 thuộc tính ✓).
+
+Ngày tháng lưu dạng chuỗi `"DD/MM/YYYY"` và kiểm tra bằng `isValidDate`
+(đúng định dạng, đúng lịch kể cả năm nhuận). Số ngày thuê không lưu riêng
+mà tính lúc trả phòng: `dateToDays(ngày ra) - dateToDays(ngày vào)`
+(tối thiểu 1 ngày).
 
 ## 3. Chức năng
 
@@ -50,8 +56,11 @@ Lưu trữ bằng mảng 1 chiều tĩnh `Room rooms[100]`, đúng yêu cầu đ
 | 11 | Đọc dữ liệu từ file `.txt` (`loadFromFile`) |
 | 0 | Thoát |
 
-Validate đầu vào bằng `fgets`/`strtol`/`strtof` (không trôi lệnh như `scanf`),
+Đọc số bằng `scanf` kèm vòng lặp xóa ký tự thừa đến hết dòng (tránh trôi lệnh),
+đọc chuỗi bằng `fgets` (an toàn với khoảng trắng và độ dài),
 tên hàm/biến tiếng Anh camelCase, mỗi chức năng là một hàm riêng.
+Hàm tiện ích ngày tháng dùng chung: `isLeapYear`, `daysInMonth`,
+`isValidDate`, `dateToDays`.
 
 ## 4. Biên dịch & chạy
 
@@ -73,11 +82,12 @@ File `.txt` do chương trình tự lưu/đọc (chọn chức năng 10/11, nh�
 
 ```
 TONGDOANHTHU|<tổng doanh thu>
-<roomId>|<roomType>|<pricePerDay>|<maxGuests>|<status>|<guestName>|<daysStayed>
+<roomId>|<roomType>|<pricePerDay>|<maxGuests>|<status>|<guestName>|<checkInDate>|<checkOutDate>
 ...
 ```
 
-Phòng trống ghi `guestName` là `<TRONG>` để tránh lỗi parse khi đọc file.
+Phòng trống ghi `guestName`, `checkInDate`, `checkOutDate` là `<TRONG>`
+để tránh lỗi parse khi đọc file.
 
 ## 6. Demo
 
