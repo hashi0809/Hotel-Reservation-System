@@ -110,11 +110,110 @@ void loadFromFile(void) {
 }
 
 void searchRooms(void) {
-    printf("[TV3] Chuc nang searchRooms dang phat trien.\n");
+    int choice;
+    do{
+        printf("\n--- TIM KIEM PHONG ---\n");
+        printf("1. Tim kiem theo ma phong\n");
+        printf("2. Tim kiem theo loai phong\n");
+        printf("0. Quay lai menu chinh\n");
+        
+        if(!readInt("Nhap lua chon tim kiem: ", &choice)){
+            printf("Lua chon khong hop le!\n");
+            continue;
+        }
+        
+        switch(choice){
+            case 1:{
+                int roomId;
+                if(!readInt("Nhap ma phong can tim: ", &roomId)){
+                    printf("Ma phong khong hop le!\n");
+                    break;
+                }
+                
+                int index = findRoomIndex(roomId);
+                if(index == -1){
+                    printf("Khong tim thay phong co ma %d trong he thong!\n", roomId);
+                }else{
+                    printf("\n=> KET QUA TIM KIEM:\n");
+                    printHeader();
+                    printRoom(&rooms[index]);
+                }
+                break;
+            }
+            case 2:{
+                char type[20];
+                readString("Nhap loai phong (Don, Doi, VIP, TongThong): ", type, sizeof(type));
+                
+                if(!isValidRoomType(type)){
+                    printf("Loai phong khong hop le hoac khong ton tai!\n");
+                    break;
+                }
+                
+                int foundCount = 0;
+                printf("\n=> DANH SACH PHONG THUOC LOAI '%s':\n", type);
+                for(int i = 0; i < roomCount; i++) {
+                    if(strcmp(rooms[i].roomType, type) == 0){
+                        if (foundCount == 0){
+                            printHeader();
+                        }
+                        printRoom(&rooms[i]);
+                        foundCount++;
+                    }
+                }
+                
+                if(foundCount == 0){
+                    printf("Hien tai khong co phong nao thuoc loai nay.\n");
+                }else{
+                    printf("Tim thay tong cong %d phong.\n", foundCount);
+                }
+                break;
+            }
+            case 0:
+                printf("Quay lai menu chinh...\n");
+                break;
+            default:
+                printf("Lua chon khong hop le! Vui long chon tu 0 den 2.\n");
+        }
+
+    }while(choice != 0);
+    //printf("[TV3] Chuc nang searchRooms dang phat trien.\n");
 }
 
 void bookRoom(void) {
-    printf("[TV3] Chuc nang bookRoom dang phat trien.\n");
+    printf("---DAT PHONG KHACH SAN---\n");
+	int roomId, days;
+    if(!readInt("Nhap ma phong can dat: ", &roomId)){
+        printf("Ma phong khong hop le!\n");
+        return;
+    }
+    
+    int index = findRoomIndex(roomId);
+    if(index == -1){
+        printf("Phong khong ton tai!\n");
+        return;
+    }
+    
+    if(rooms[index].status == ROOM_BOOKED){
+        printf("THONG BAO: PHONG NAY DA DUOC DAT BOI KHACH HANG '%s'!\n", rooms[index].guestName);
+        return;
+    }
+    
+    readString("Nhap ten khach hang: ", rooms[index].guestName, sizeof(rooms[index].guestName));
+    
+    do{
+        if(!readInt("Nhap so ngay thue: ", &days)){
+            days = -1;
+        }
+        if(days <= 0){
+            printf("So ngay thue khong hop le. Vui long nhap lai!\n");
+        }
+    }while(days <= 0);
+    
+    rooms[index].daysStayed = days;
+    rooms[index].status = ROOM_BOOKED;
+    
+    float totalCost = rooms[index].pricePerDay * days;
+    //printf("\n=== DAT PHONG THANH CONG! ===\n");
 }
 
 void checkoutRoom(void) {
