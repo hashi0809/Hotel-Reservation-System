@@ -26,16 +26,16 @@ typedef struct {
     int   maxGuests;         // số khách tối đa
     int   status;            // ROOM_EMPTY = trống, ROOM_BOOKED = đã đặt
     char  guestName[51];     // tên khách đang thuê
-    char  checkInDate[11];   // ngày vào, dạng "DD/MM/YYYY"
-    char  checkOutDate[11];  // ngày ra, dạng "DD/MM/YYYY" (trống khi chưa trả)
+    char  checkInDate[9];    // ngày vào, dạng "DDMMYYYY" (vd "10102026")
+    char  checkOutDate[9];   // ngày ra, dạng "DDMMYYYY" (trống khi chưa trả)
 } Room;
 ```
 
-Lưu trữ bằng mảng 1 chiều tĩnh `Room rooms[100]`, đúng yêu cầu đề bài
+Lưu trữ bằng mảng 1 chiều tĩnh `Room rooms[10000]`, đúng yêu cầu đề bài
 (int ✓, long ✓, chuỗi ✓, trên 4 thuộc tính ✓).
 
-Ngày tháng lưu dạng chuỗi `"DD/MM/YYYY"` và kiểm tra bằng `isValidDate`
-(đúng định dạng, đúng lịch kể cả năm nhuận). Số ngày thuê không lưu riêng
+Ngày tháng lưu dạng chuỗi `"DDMMYYYY"` (8 chữ số liền nhau) và kiểm tra bằng
+`isValidDate` (đủ 8 số, đúng lịch kể cả năm nhuận). Số ngày thuê không lưu riêng
 mà tính lúc trả phòng: `dateToDays(ngày ra) - dateToDays(ngày vào)`
 (tối thiểu 1 ngày).
 
@@ -56,9 +56,9 @@ mà tính lúc trả phòng: `dateToDays(ngày ra) - dateToDays(ngày vào)`
 | 11 | Đọc dữ liệu từ file `.txt` (`loadFromFile`) |
 | 0 | Thoát |
 
-Đọc số bằng `scanf` kèm vòng lặp xóa ký tự thừa đến hết dòng (tránh trôi lệnh),
-đọc chuỗi bằng `fgets` (an toàn với khoảng trắng và độ dài),
-tên hàm/biến tiếng Anh camelCase, mỗi chức năng là một hàm riêng.
+Đọc số bằng `scanf`; dọn ký tự Enter thừa sau mỗi lần đọc (`getchar()`)
+và dọn cả dòng khi nhập sai (`scanf("%*[^\n]")`) để tránh trôi lệnh và treo máy.
+Tên hàm/biến tiếng Anh camelCase, mỗi chức năng là một hàm riêng.
 Hàm tiện ích ngày tháng dùng chung: `isLeapYear`, `daysInMonth`,
 `isValidDate`, `dateToDays`.
 
@@ -78,16 +78,17 @@ hotel.exe
 
 ## 5. Định dạng file dữ liệu
 
-File `.txt` do chương trình tự lưu/đọc (chọn chức năng 10/11, nhập tên file không cần `.txt`):
+File `.txt` do chương trình tự lưu/đọc (chức năng 10/11), mỗi dòng một phòng,
+8 trường cách nhau bằng `|`:
 
 ```
-TONGDOANHTHU|<tổng doanh thu>
 <roomId>|<roomType>|<pricePerDay>|<maxGuests>|<status>|<guestName>|<checkInDate>|<checkOutDate>
 ...
 ```
 
-Phòng trống ghi `guestName`, `checkInDate`, `checkOutDate` là `<TRONG>`
-để tránh lỗi parse khi đọc file.
+Phòng trống ghi `guestName`, `checkInDate`, `checkOutDate` là `<NULL>`.
+File chỉ lưu thông tin phòng + ngày đặt để tra cứu phòng trống theo ngày;
+số ngày ở và doanh thu tính trong lúc chạy, không lưu vào file.
 
 ## 6. Demo
 
