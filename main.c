@@ -258,21 +258,30 @@ void searchRooms(void)
     }
 
     char loai[20];
-    if (guest == 1)
+    long money = 0;
+    if (guest == 1){
         strcpy(loai, "DON");
-    else if (guest == 2)
+        money = 350000;
+    }
+    else if (guest == 2){
         strcpy(loai, "DOI");
-    else if (guest <= 5)
+        money = 550000;
+    }
+    else if (guest >= 2 && guest <= 5){
         strcpy(loai, "VIP");
-    else
+        money = 1500000;
+    }
+    else{
         strcpy(loai, "TONGTHONG");
-
+        money = 3500000;
+    }
+        
     int dem = 0;
     for (int i = 0; i < roomCount; i++){
         if (strcasecmp(rooms[i].roomType, loai) == 0 && rooms[i].status == ROOM_EMPTY && rooms[i].maxGuests >= guest)
             dem++;
     }
-    printf("Hien tai co %d phong %s danh cho ban\n", dem, loai);
+    printf("Hien tai co %d phong %s danh cho ban voi gia %ld VND\n", 0, loai, money);
 
     for (int i = 0; i < roomCount; i++){
         if (strcasecmp(rooms[i].roomType, loai) == 0 && rooms[i].status == ROOM_EMPTY && rooms[i].maxGuests >= guest)
