@@ -36,23 +36,6 @@ void clearInput(void)
     scanf("%*[^\n]");
     getchar();
 }
-
-
-/* Nhap ma phong 101-200, nhap sai thi nhap lai */
-/*int inputRoomId(void)
-{
-    int roomId = 0;
-    do
-    {
-        printf("Nhap ma phong (101-200): ");
-        scanf("%d", &roomId);
-        scanf("%*[^\n]");
-        getchar();
-        if (roomId < 101 || roomId > 200)
-            printf("Ma phong khong hop le, vui long nhap lai!\n");
-    } while (roomId < 101 || roomId > 200);
-    return roomId;
-}*/
 /* Ham tien ich: nhap ma phong 101-200 co kiem tra */
 int inputRoomId(const char *prompt)
 {
@@ -281,7 +264,7 @@ void searchRooms(void)
         if (strcasecmp(rooms[i].roomType, loai) == 0 && rooms[i].status == ROOM_EMPTY && rooms[i].maxGuests >= guest)
             dem++;
     }
-    printf("Hien tai co %d phong %s danh cho ban voi gia %ld VND\n", 0, loai, money);
+    printf("Hien tai co %d phong %s danh cho ban voi gia %ld VND\n", dem, loai, money);
 
     for (int i = 0; i < roomCount; i++){
         if (strcasecmp(rooms[i].roomType, loai) == 0 && rooms[i].status == ROOM_EMPTY && rooms[i].maxGuests >= guest)
