@@ -1,6 +1,8 @@
 # Binary đã biên dịch
 hotel
 hotel.exe
+test
+test.exe
 /main
 *.o
 *.out
