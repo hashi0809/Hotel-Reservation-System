@@ -351,7 +351,7 @@ void checkoutRoom(void)
 {
     printf("------TRA PHONG------\n");
     int index = findRooms(inputRoomId("Nhap so phong cua ban: "));
-    /*if (index == -1)
+    if (index == -1)
     {
         printf("Khong tim thay phong!\n");
         return;
@@ -360,7 +360,7 @@ void checkoutRoom(void)
     {
         printf("Phong nay dang trong, chua duoc dat!\n");
         return;
-    }*/
+    }
 
     int acp = -1;
     do
