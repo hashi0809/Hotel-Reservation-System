@@ -750,7 +750,7 @@ int main(void)
             giaTri = 0;
             if (thuocTinh == 1)
             {
-            	chon = (int)nhapSo("Loai phong cua khach san gom:\n 1.Don\n2.Doi\n3.VIP\n4.TongThong\n Chon loai phong: ", 1, 4, "Loai phong khong hop le!\n");
+            	chon = (int)nhapSo("Loai phong cua khach san gom:\n1.Don\n2.Doi\n3.VIP\n4.TongThong\n Chon loai phong: ", 1, 4, "Loai phong khong hop le!\n");
                 ganLoaiPhong(&tam, chon);
                 strcpy(loai, tam.roomType);
             }
@@ -953,7 +953,7 @@ int main(void)
             if (chon == 1)
             {
                 int loaiChon;
-                loaiChon = (int)nhapSo("Chon loai phong moi: 1.Don 2.Doi 3.VIP 4.TongThong: ", 1, 4, "Loai phong khong hop le!\n");
+                loaiChon = (int)nhapSo("Loai phong cua khach san gom:\n1.Don\n2.Doi\n3.VIP\n4.TongThong\n Chon loai phong: ", 1, 4, "Loai phong khong hop le!\n");
                 kq = capNhatPhong(id, 1, loaiChon, 0, NULL);
                 idx = findRooms(id);
                 if (kq == 0)
