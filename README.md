@@ -3,6 +3,22 @@
 Đồ án cuối khóa môn lập trình C — ứng dụng console quản lý đặt phòng khách sạn:
 thêm/sửa/xóa phòng, đặt phòng, trả phòng + in hóa đơn, thống kê doanh thu và tỷ lệ lấp đầy.
 
+## Giới thiệu đề tài
+
+**Tên đề tài:** Xây dựng ứng dụng console quản lý đặt phòng khách sạn bằng ngôn ngữ C.
+
+**Bối cảnh:** Nhiều khách sạn quy mô nhỏ vẫn quản lý phòng, khách thuê và
+doanh thu bằng sổ sách thủ công — dễ nhầm lẫn, khó tra cứu lịch sử đặt phòng
+và mất thời gian tổng hợp báo cáo cuối ngày.
+
+**Mục tiêu:** Tin học hóa quy trình vận hành của một khách sạn nhỏ: quản lý
+danh sách phòng (thêm/sửa/xóa), đặt phòng và trả phòng kèm in hóa đơn, tra cứu
+phòng trống theo ngày, thống kê doanh thu và tỷ lệ lấp đầy. Dữ liệu được lưu
+ra file text để dùng lại giữa các lần chạy.
+
+**Phạm vi:** Ứng dụng console chạy trên một máy tính (không mạng, không cơ sở
+dữ liệu), phục vụ nhân viên lễ tân — một người dùng tại một thời điểm.
+
 ## 1. Thành viên & phân công
 
 | # | Họ tên | MSSV | Phụ trách |
@@ -56,8 +72,9 @@ mà tính lúc trả phòng: `dateToDays(ngày ra) - dateToDays(ngày vào)`
 | 11 | Đọc dữ liệu từ file `.txt` (`loadFromFile`) |
 | 0 | Thoát |
 
-Đọc số bằng `scanf`; dọn ký tự Enter thừa sau mỗi lần đọc (`getchar()`)
-và dọn cả dòng khi nhập sai (`scanf("%*[^\n]")`) để tránh trôi lệnh và treo máy.
+Đọc số bằng `gets` (đọc cả dòng), kiểm tra từng ký tự phải là chữ số
+(`"350.000"`, `"12abc"` bị từ chối) rồi mới chuyển sang số bằng `atol`,
+tránh lỗi `scanf` nhận một phần chuỗi số.
 Tên hàm/biến tiếng Anh camelCase, mỗi chức năng là một hàm riêng.
 Hàm tiện ích ngày tháng dùng chung: `isLeapYear`, `daysInMonth`,
 `isValidDate`, `dateToDays`.

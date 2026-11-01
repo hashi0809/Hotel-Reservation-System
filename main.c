@@ -566,16 +566,30 @@ int loadFromFile(const char *tenFile)
 }
 long nhapSo(const char *prompt, long min, long max, const char *loi)
 {
+    char s[64];
     long v;
+    int i, dem;
     while (1)
     {
         printf("%s", prompt);
-        if (scanf("%ld", &v) != 1)
+        gets(s);
+        i = 0;
+        dem = 0;
+        if (s[0] == '-')
+            i = 1;
+        while (s[i] != '\0')
         {
-            clearInput();
+            if (s[i] < '0' || s[i] > '9' || dem >= 18)
+                break;
+            i++;
+            dem++;
+        }
+        if (s[i] != '\0' || dem == 0)
+        {
             printf("%s", loi);
             continue;
         }
+        v = atol(s);
         if (v < min || v > max)
         {
             printf("%s", loi);
@@ -629,16 +643,32 @@ void lapTenFileTxt(const char *ten, char *full, int n)
 int main(void)
 {
     int choice;
+    char s[64];
+    int i, hopLe;
     do
     {
         displayMenu();
-        if (scanf("%d", &choice) != 1)
+        gets(s);
+        hopLe = 1;
+        i = 0;
+        if (s[0] == '\0')
+            hopLe = 0;
+        while (s[i] != '\0')
         {
-            clearInput();
+            if (s[i] < '0' || s[i] > '9' || i >= 9)
+            {
+                hopLe = 0;
+                break;
+            }
+            i++;
+        }
+        if (!hopLe)
+        {
             choice = -1;
             printf("\n");
             continue;
         }
+        choice = atoi(s);
         switch (choice)
         {
         case 0:
