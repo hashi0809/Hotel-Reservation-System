@@ -600,6 +600,7 @@ long nhapSo(const char *prompt, long min, long max, const char *loi)
 }
 void nhapChuoi(const char *prompt, char *chuoi, int kieu)
 {
+    int i, coGach;
     while (1)
     {
         printf("%s", prompt);
@@ -612,9 +613,29 @@ void nhapChuoi(const char *prompt, char *chuoi, int kieu)
         }
         else
         {
-            if (strlen(chuoi) > 0)
-                break;
-            printf("Ten khach hang khong duoc de trong! Vui long nhap lai.\n");
+            if (strlen(chuoi) == 0)
+            {
+                printf("Ten khach hang khong duoc de trong! Vui long nhap lai.\n");
+                continue;
+            }
+            if (strlen(chuoi) > 50)
+            {
+                printf("Ten khach hang khong duoc qua 50 ky tu! Vui long nhap lai.\n");
+                continue;
+            }
+            coGach = 0;
+            for (i = 0; chuoi[i] != '\0'; i++)
+                if (chuoi[i] == '|')
+                {
+                    coGach = 1;
+                    break;
+                }
+            if (coGach)
+            {
+                printf("Ten khach hang khong duoc chua ky tu |! Vui long nhap lai.\n");
+                continue;
+            }
+            break;
         }
     }
 }
